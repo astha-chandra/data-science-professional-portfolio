@@ -320,7 +320,86 @@
 
     </div>
   </section>
+<section>
+  <div class="container">
 
+    <h2>Data Infrastructure & Tools</h2>
+
+    <p class="intro">
+      The project used a lightweight analytical stack suited to a structured
+      public dataset of 10,000 customer records. Tool selection was based on
+      reproducibility, modelling requirements, interpretability and the need to
+      translate technical outputs into accessible decision support.
+    </p>
+
+    <div class="grid-2">
+
+      <div class="card">
+        <h3>Python & pandas</h3>
+        <p>
+          Python and pandas were used for data inspection, cleaning, transformation
+          and analytical preparation. For a dataset of this scale, in-memory
+          processing provided a transparent and efficient workflow without requiring
+          distributed infrastructure.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>scikit-learn</h3>
+        <p>
+          scikit-learn was selected for preprocessing pipelines, model training and
+          evaluation because the project involved conventional supervised
+          classification on structured tabular data. Pipelines also helped keep
+          preprocessing consistent between training and test data.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Power BI</h3>
+        <p>
+          Power BI was used after modelling to translate predictions and evaluation
+          outputs into an interactive decision-support layer. This separated the
+          technical modelling workflow from the information required by operational
+          users, such as customer risk, model performance and retention priorities.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Why this architecture was proportionate</h3>
+        <p>
+          A local Python workflow was proportionate for a static dataset of 10,000
+          observations and supported rapid experimentation. Introducing distributed
+          processing or cloud-scale infrastructure would have added complexity
+          without a corresponding analytical benefit at this scale.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="highlight">
+      <strong>Scalability limitation:</strong>
+      This architecture should not be interpreted as a production design. If the
+      solution were applied to substantially larger customer volumes, multiple live
+      data sources or frequent scoring requirements, the local workflow would become
+      increasingly difficult to operate reliably. A production implementation would
+      require automated ingestion and validation, versioned model artefacts,
+      scheduled or event-driven scoring, controlled deployment and ongoing
+      performance and data-drift monitoring.
+    </div>
+
+    <div class="highlight">
+      <strong>Alternative approaches:</strong>
+      Distributed processing platforms and cloud-based machine-learning services
+      could provide greater scalability and automation, but were not required for
+      the scale or purpose of this project. Similarly, Power BI was appropriate for
+      stakeholder-facing exploration, whereas a production application requiring
+      real-time individual predictions would require a different serving layer.
+      Tool choice was therefore treated as dependent on the analytical and
+      operational context rather than as a one-size-fits-all technology decision.
+    </div>
+
+  </div>
+</section>
   <section>
     <div class="container">
 
