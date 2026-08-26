@@ -1015,8 +1015,41 @@
             impact.
           </p>
         </div>
+        <div class="card">
+  <h3>Privacy & data minimisation</h3>
+  <p>
+    The portfolio uses a public Kaggle dataset and does not contain real customer
+    information. In a production banking context, only attributes necessary for
+    the defined retention purpose should be processed, with appropriate access
+    controls, retention rules and governance applied to customer-level predictions.
+  </p>
+</div>
+
+<div class="card">
+  <h3>Residual risk</h3>
+  <p>
+    Human review and performance monitoring would reduce, but not eliminate, the
+    risk that some customer groups receive different levels of retention attention.
+    Segment-level performance should therefore be monitored before deployment.
+    Some residual classification error is unavoidable and is acceptable only where
+    predictions support proportionate retention activity rather than adverse or
+    fully automated customer decisions.
+  </p>
+</div>
 
       </div>
+      </div>  <!-- grid-2 closes -->
+
+<div class="highlight">
+  <strong>Fairness limitation:</strong>
+  The presence of age, gender and geography creates a specific need for fairness
+  assessment. Overall model performance alone cannot establish that error rates are
+  comparable between demographic groups. A production implementation would therefore
+  require segment-level evaluation of false-positive and false-negative rates and
+  review of whether sensitive or proxy variables should remain in the predictor set.
+</div>
+
+</div>  <!-- container closes -->
 
     </div>
   </section>
