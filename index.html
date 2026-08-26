@@ -1,1 +1,701 @@
-Portfolio homepage
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Astha Chandra | Data Science Portfolio</title>
+
+  <style>
+    :root {
+      --navy: #102a43;
+      --blue: #1f6feb;
+      --light-blue: #eaf3ff;
+      --text: #243b53;
+      --muted: #627d98;
+      --background: #f7f9fc;
+      --white: #ffffff;
+      --border: #d9e2ec;
+      --green: #2f855a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* Navigation */
+
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1150px;
+      margin: auto;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .nav-links a:hover {
+      color: var(--blue);
+    }
+
+    /* Hero */
+
+    .hero {
+      max-width: 1150px;
+      margin: auto;
+      padding: 100px 25px 85px;
+      display: grid;
+      grid-template-columns: 1.4fr 0.6fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-weight: 700;
+      margin-bottom: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    h1 {
+      color: var(--navy);
+      font-size: 3.2rem;
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .hero h2 {
+      color: var(--muted);
+      font-size: 1.35rem;
+      font-weight: 500;
+      margin-bottom: 25px;
+    }
+
+    .hero p {
+      max-width: 720px;
+      font-size: 1.08rem;
+      margin-bottom: 30px;
+    }
+
+    .hero-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 35px;
+      box-shadow: 0 10px 30px rgba(16, 42, 67, 0.08);
+    }
+
+    .hero-card h3 {
+      color: var(--navy);
+      margin-bottom: 16px;
+    }
+
+    .hero-card ul {
+      padding-left: 20px;
+    }
+
+    .hero-card li {
+      margin: 8px 0;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--blue);
+      color: white;
+      padding: 12px 22px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 700;
+      margin-right: 10px;
+      margin-bottom: 10px;
+    }
+
+    .button.secondary {
+      background: white;
+      color: var(--blue);
+      border: 1px solid var(--blue);
+    }
+
+    /* Sections */
+
+    section {
+      padding: 80px 25px;
+    }
+
+    .section-container {
+      max-width: 1150px;
+      margin: auto;
+    }
+
+    .section-title {
+      color: var(--navy);
+      font-size: 2.1rem;
+      margin-bottom: 12px;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 780px;
+      margin-bottom: 40px;
+    }
+
+    /* About */
+
+    #about {
+      background: var(--white);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+    }
+
+    .about-grid p {
+      margin-bottom: 18px;
+    }
+
+    .focus-box {
+      background: var(--light-blue);
+      border-left: 4px solid var(--blue);
+      padding: 25px;
+      border-radius: 8px;
+    }
+
+    /* Skills */
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .skill-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      padding: 25px;
+      border-radius: 12px;
+    }
+
+    .skill-card h3 {
+      color: var(--navy);
+      margin-bottom: 12px;
+    }
+
+    .skill-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    /* Projects */
+
+    #projects {
+      background: var(--white);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+    }
+
+    .project-card {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+      background: var(--white);
+      box-shadow: 0 8px 24px rgba(16, 42, 67, 0.06);
+    }
+
+    .project-number {
+      color: var(--blue);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 10px;
+    }
+
+    .project-card h3 {
+      color: var(--navy);
+      font-size: 1.5rem;
+      margin-bottom: 12px;
+    }
+
+    .project-card p {
+      margin-bottom: 18px;
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 18px 0 25px;
+    }
+
+    .tag {
+      background: var(--light-blue);
+      color: var(--blue);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+    }
+
+    .status {
+      display: inline-block;
+      color: var(--green);
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+
+    /* Professional practice */
+
+    .practice-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .practice-item {
+      background: var(--white);
+      padding: 25px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+    }
+
+    .practice-item h3 {
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    /* Footer */
+
+    footer {
+      background: var(--navy);
+      color: white;
+      padding: 40px 25px;
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+    }
+
+    @media (max-width: 850px) {
+      .hero,
+      .about-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .skills-grid,
+      .practice-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .nav-container {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .nav-links {
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .skills-grid,
+      .practice-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 65px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navigation -->
+
+  <nav>
+    <div class="nav-container">
+      <div class="brand">Astha Chandra</div>
+
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#practice">Professional Practice</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+
+  <header class="hero">
+
+    <div>
+      <div class="eyebrow">Data Science Professional Portfolio</div>
+
+      <h1>Turning data into practical business decisions.</h1>
+
+      <h2>Senior Software Engineer | Data Science Apprentice</h2>
+
+      <p>
+        A professional portfolio demonstrating the application of machine learning,
+        data engineering, visualisation and business-focused analytics to real-world
+        problems.
+      </p>
+
+      <p>
+        The projects presented here cover the complete analytical journey:
+        understanding a business problem, preparing and analysing data, developing
+        models, evaluating performance, creating decision-support visualisations and
+        communicating actionable outcomes.
+      </p>
+
+      <a class="button" href="#projects">Explore Projects</a>
+
+      <a class="button secondary"
+         href="https://github.com/astha-chandra"
+         target="_blank">
+        GitHub Profile
+      </a>
+    </div>
+
+    <div class="hero-card">
+      <h3>Portfolio Focus</h3>
+
+      <ul>
+        <li>Predictive modelling and machine learning</li>
+        <li>Data engineering and data quality</li>
+        <li>Power BI and decision-support dashboards</li>
+        <li>Model evaluation and interpretation</li>
+        <li>Business impact and stakeholder communication</li>
+      </ul>
+    </div>
+
+  </header>
+
+  <!-- About -->
+
+  <section id="about">
+
+    <div class="section-container">
+
+      <h2 class="section-title">About Me</h2>
+
+      <p class="section-intro">
+        Combining professional software engineering experience with developing
+        expertise in applied data science.
+      </p>
+
+      <div class="about-grid">
+
+        <div>
+          <p>
+            I am a <strong>Senior Software Engineer and Data Science Apprentice</strong>,
+            developing expertise in applying data science, machine learning and
+            analytics to practical business challenges.
+          </p>
+
+          <p>
+            My professional background in software engineering provides a strong
+            foundation in structured problem-solving, technical delivery and working
+            with complex systems. Through the Data Science apprenticeship, this
+            experience has been extended into data engineering, exploratory analysis,
+            predictive modelling, model evaluation and data visualisation.
+          </p>
+
+          <p>
+            This portfolio brings together academic and workplace-based projects,
+            demonstrating how analytical techniques can be translated into clear,
+            evidence-based business decisions.
+          </p>
+        </div>
+
+        <div class="focus-box">
+          <strong>My approach</strong>
+
+          <p style="margin-top:12px;">
+            Technical performance is only one part of a successful data science
+            project. Emphasis is placed on understanding the decision being supported,
+            selecting appropriate analytical methods, evaluating limitations and
+            communicating results in a way that stakeholders can use.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Skills -->
+
+  <section id="skills">
+
+    <div class="section-container">
+
+      <h2 class="section-title">Technical Skills</h2>
+
+      <p class="section-intro">
+        Skills demonstrated through the projects and professional work presented in
+        this portfolio.
+      </p>
+
+      <div class="skills-grid">
+
+        <div class="skill-card">
+          <h3>Programming & Data</h3>
+          <p>Python, pandas, NumPy, SQL and data manipulation.</p>
+        </div>
+
+        <div class="skill-card">
+          <h3>Machine Learning</h3>
+          <p>
+            scikit-learn, Logistic Regression, Random Forest, classification,
+            feature importance and threshold optimisation.
+          </p>
+        </div>
+
+        <div class="skill-card">
+          <h3>Visualisation & BI</h3>
+          <p>
+            Power BI, dashboard development, KPI design, data storytelling and
+            decision-support visualisation.
+          </p>
+        </div>
+
+        <div class="skill-card">
+          <h3>Data Engineering</h3>
+          <p>
+            Data cleaning, transformation, feature engineering, data quality,
+            reconciliation and analytical pipelines.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- Projects -->
+
+  <section id="projects">
+
+    <div class="section-container">
+
+      <h2 class="section-title">Featured Projects</h2>
+
+      <p class="section-intro">
+        Two case studies demonstrating technical data science capability and
+        application within a business context.
+      </p>
+
+      <div class="projects-grid">
+
+        <!-- Project 1 -->
+
+        <article class="project-card">
+
+          <div class="project-number">Project 01 · Data Science Project</div>
+
+          <h3>Customer Churn Prediction & Retention Intelligence</h3>
+
+          <div class="status">✓ Completed</div>
+
+          <p>
+            An end-to-end machine-learning project developed using a public banking
+            customer dataset to identify customers at elevated risk of churn and
+            support targeted retention decisions.
+          </p>
+
+          <p>
+            Logistic Regression and Random Forest models were compared before
+            threshold optimisation was used to improve identification of genuine
+            churners. Model outputs were then integrated into a three-page Power BI
+            decision-support solution.
+          </p>
+
+          <div class="tags">
+            <span class="tag">Python</span>
+            <span class="tag">scikit-learn</span>
+            <span class="tag">Random Forest</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">Machine Learning</span>
+          </div>
+
+          <p>
+            <strong>Final model:</strong> 84.45% Accuracy · 85.03% ROC-AUC ·
+            60.44% Churn Recall · 61.27% F1
+          </p>
+
+          <a class="button" href="#">
+            View Case Study — Coming Next
+          </a>
+
+        </article>
+
+        <!-- Project 2 -->
+
+        <article class="project-card">
+
+          <div class="project-number">Project 02 · Workplace Impact Evaluation</div>
+
+          <h3>Cloud Cost Forecast Reliability & FinOps Decision Support</h3>
+
+          <div class="status">✓ Workplace Project</div>
+
+          <p>
+            A workplace-based analytical project addressing recurring cloud-cost
+            reporting discrepancies and manual reconciliation within the monthly
+            forecasting process.
+          </p>
+
+          <p>
+            Cloudability and FinOps forecast information were reconciled and analysed
+            to identify systematic discrepancy drivers. Predictive analytics and an
+            interactive dashboard were used to support earlier investigation,
+            reporting continuity and more focused governance.
+          </p>
+
+          <div class="tags">
+            <span class="tag">Cloudability</span>
+            <span class="tag">FinOps</span>
+            <span class="tag">Logistic Regression</span>
+            <span class="tag">Power BI</span>
+            <span class="tag">Data Quality</span>
+          </div>
+
+          <p>
+            <strong>Analytical result:</strong> ROC-AUC 0.76 ·
+            83% discrepancy recall at a 0.35 decision threshold.
+          </p>
+
+          <a class="button" href="#">
+            View Impact Case Study — Coming Next
+          </a>
+
+        </article>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Professional Practice -->
+
+  <section id="practice">
+
+    <div class="section-container">
+
+      <h2 class="section-title">Professional Practice</h2>
+
+      <p class="section-intro">
+        Data science work is evaluated not only by technical performance, but by its
+        ability to support responsible and useful decisions.
+      </p>
+
+      <div class="practice-grid">
+
+        <div class="practice-item">
+          <h3>Business Focus</h3>
+          <p>
+            Analytical choices are linked to the operational decision and stakeholder
+            need being addressed.
+          </p>
+        </div>
+
+        <div class="practice-item">
+          <h3>Responsible Analytics</h3>
+          <p>
+            Model limitations, privacy, data quality, bias and human oversight are
+            considered as part of solution design.
+          </p>
+        </div>
+
+        <div class="practice-item">
+          <h3>Evidence & Impact</h3>
+          <p>
+            Model metrics, business outcomes and stakeholder evidence are separated
+            clearly from projected benefits.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Footer -->
+
+  <footer>
+
+    <p>
+      <strong>Astha Chandra</strong> · Senior Software Engineer | Data Science Apprentice
+    </p>
+
+    <p style="margin-top:8px;">
+      <a href="https://github.com/astha-chandra" target="_blank">
+        GitHub
+      </a>
+    </p>
+
+    <p style="margin-top:15px; font-size:0.85rem; opacity:0.8;">
+      Data Science Professional Practice Portfolio
+    </p>
+
+  </footer>
+
+</body>
+</html>
