@@ -400,6 +400,93 @@
 
   </div>
 </section>
+  <section class="white">
+  <div class="container">
+
+    <h2>Data Engineering & Preprocessing Decisions</h2>
+
+    <p class="intro">
+      Data preparation was designed to support fair out-of-sample evaluation and
+      reproducible model scoring. Preprocessing choices were made with particular
+      attention to class balance, consistency between training and test data, and
+      avoidance of information leakage.
+    </p>
+
+    <div class="grid-2">
+
+      <div class="card">
+        <h3>Stratified train-test split</h3>
+        <p>
+          The dataset was divided into 80% training and 20% test data using
+          stratification on the churn target. This preserved the minority churn
+          proportion across both samples and reduced the risk that model comparison
+          would be distorted by materially different class distributions.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Pipeline-based preprocessing</h3>
+        <p>
+          Numerical scaling and categorical encoding were incorporated within
+          scikit-learn pipelines. This ensured that transformations were learned from
+          the training data and then applied consistently to the hold-out test set,
+          rather than being fitted independently to the complete dataset.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Categorical encoding</h3>
+        <p>
+          One-hot encoding was used for categorical features because the categories
+          did not represent a meaningful ordinal scale. The
+          <code>handle_unknown="ignore"</code> setting also reduced the risk of
+          scoring failure if a previously unseen category appeared during inference.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Feature engineering</h3>
+        <p>
+          Interpretable derived features such as AgeBand were created to improve
+          analysis and dashboard communication. Derived operational fields such as
+          ChurnProbability, PredictedChurn and retention actions were created only
+          after model scoring and were not used as predictors.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="highlight">
+      <strong>Leakage control:</strong>
+      Outcome-derived fields and model outputs were excluded from the predictor set.
+      The hold-out test set was retained for evaluation rather than being used to
+      tune preprocessing choices or engineer features around final test outcomes.
+      This helps ensure that reported performance reflects behaviour on unseen data
+      rather than information inadvertently carried forward from the target.
+    </div>
+
+    <div class="highlight">
+      <strong>Alternative preprocessing choices:</strong>
+      Standardisation was particularly useful for Logistic Regression, whereas
+      Random Forest models are less sensitive to feature scale. A separate
+      tree-specific pipeline without scaling could therefore have been used.
+      Similarly, different age bands or no age-band feature at all would have been
+      reasonable alternatives. These choices may influence interpretability and
+      model behaviour, so they should be validated rather than assumed to improve
+      generalisation.
+    </div>
+
+    <div class="highlight">
+      <strong>Generalisation consideration:</strong>
+      The preprocessing pipeline is appropriate for the observed Kaggle dataset, but
+      a production version would need validation against new customer populations,
+      changing category distributions and evolving data-quality rules. Monitoring
+      for missing fields, unseen categories, churn-rate shifts and feature
+      distribution drift would therefore be required before automated scoring.
+    </div>
+
+  </div>
+</section>
   <section>
     <div class="container">
 
