@@ -1,1 +1,806 @@
-Cloud Cost Impact Case Study
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Cloud Cost Forecast Reliability | Astha Chandra</title>
+
+  <style>
+    :root {
+      --navy: #102a43;
+      --blue: #1f6feb;
+      --light-blue: #eaf3ff;
+      --text: #243b53;
+      --muted: #627d98;
+      --background: #f7f9fc;
+      --white: #ffffff;
+      --border: #d9e2ec;
+      --green: #2f855a;
+      --amber: #b7791f;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: var(--blue);
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+      padding: 85px 25px 60px;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+
+    h1 {
+      color: var(--navy);
+      font-size: 3rem;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      max-width: 850px;
+      font-size: 1.08rem;
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 25px;
+    }
+
+    .tag {
+      background: var(--light-blue);
+      color: var(--blue);
+      padding: 6px 11px;
+      border-radius: 20px;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    section {
+      padding: 65px 25px;
+    }
+
+    .white {
+      background: var(--white);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h2 {
+      color: var(--navy);
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    .intro {
+      color: var(--muted);
+      max-width: 850px;
+      margin-bottom: 30px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 25px;
+      box-shadow: 0 6px 20px rgba(16,42,67,0.05);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--blue);
+      display: block;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .highlight {
+      background: var(--light-blue);
+      border-left: 4px solid var(--blue);
+      padding: 22px;
+      border-radius: 8px;
+      margin: 24px 0;
+    }
+
+    .impact-note {
+      background: #fffaf0;
+      border-left: 4px solid var(--amber);
+      padding: 22px;
+      border-radius: 8px;
+      margin: 24px 0;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .step {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .step strong {
+      color: var(--blue);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: var(--white);
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--light-blue);
+      color: var(--navy);
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--blue);
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+
+    .button.secondary {
+      background: white;
+      color: var(--blue);
+      border: 1px solid var(--blue);
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      padding: 35px 25px;
+      text-align: center;
+    }
+
+    @media (max-width: 850px) {
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <div class="brand">Astha Chandra</div>
+      <a href="index.html">← Back to Portfolio</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+
+    <div class="eyebrow">Project 02 · Workplace Impact Evaluation</div>
+
+    <h1>Cloud Cost Forecast Reliability & FinOps Decision Support</h1>
+
+    <p>
+      A workplace-based data project addressing recurring cloud-cost reporting
+      discrepancies, manual reconciliation and forecast-confidence challenges.
+    </p>
+
+    <div class="tags">
+      <span class="tag">Cloudability</span>
+      <span class="tag">FinOps</span>
+      <span class="tag">Python</span>
+      <span class="tag">Logistic Regression</span>
+      <span class="tag">Power BI</span>
+      <span class="tag">Data Quality</span>
+      <span class="tag">Stakeholder Engagement</span>
+    </div>
+
+  </header>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>Business Challenge</h2>
+
+      <p class="intro">
+        Monthly cloud-cost forecasting relied on reconciling Cloudability reporting
+        with FinOps forecast information. Recurring discrepancies increased manual
+        investigation and created a risk that forecast issues would be identified late
+        in the reporting cycle.
+      </p>
+
+      <div class="highlight">
+        <strong>Core question:</strong>
+        Could recurring discrepancy patterns be identified early enough to focus
+        investigation on the highest-risk cost items and improve forecast confidence?
+      </div>
+
+      <p>
+        The problem involved more than simple numerical variance. Missing or
+        misattributed cost lines, inconsistent App IDs and differences between
+        Cloudability views and forecast records could all affect whether expenditure
+        appeared in the expected reporting location.
+      </p>
+
+      <p>
+        The work therefore combined reconciliation, data-quality analysis,
+        predictive modelling and decision-support visualisation rather than treating
+        each discrepancy as an isolated operational incident.
+      </p>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <h2>Project Approach</h2>
+
+      <div class="timeline">
+
+        <div class="step">
+          <strong>1. Reconcile cost sources</strong><br>
+          Cloudability cost records were compared with FinOps forecast information to
+          identify matched items and records requiring manual investigation.
+        </div>
+
+        <div class="step">
+          <strong>2. Structure the discrepancy problem</strong><br>
+          Reconciliation outcomes were converted into an analytical target indicating
+          whether a line item represented a discrepancy requiring intervention.
+        </div>
+
+        <div class="step">
+          <strong>3. Engineer operational features</strong><br>
+          Features were created around identifier completeness, source presence,
+          month-on-month change, cost volatility, environment, service category and
+          historical behaviour.
+        </div>
+
+        <div class="step">
+          <strong>4. Analyse recurring drivers</strong><br>
+          Exploratory analysis was used to identify systematic patterns associated
+          with discrepancy risk rather than assuming that issues were random.
+        </div>
+
+        <div class="step">
+          <strong>5. Develop an interpretable model</strong><br>
+          Logistic Regression was used to estimate discrepancy risk while retaining
+          sufficient transparency for Finance and FinOps stakeholders.
+        </div>
+
+        <div class="step">
+          <strong>6. Translate findings into decision support</strong><br>
+          Analytical outputs were converted into dashboard views and governance
+          recommendations to support earlier investigation and reporting continuity.
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>Data Engineering & Reconciliation</h2>
+
+      <p>
+        The recurring reconciliation process was converted into a structured dataset
+        suitable for analysis. Records were classified according to whether costs were
+        matched across sources or whether an inconsistency required manual review.
+      </p>
+
+      <div class="grid-2">
+
+        <div class="card">
+          <h3>Operational features</h3>
+
+          <p>App-ID and label completeness</p>
+          <p>Presence in Cloudability</p>
+          <p>Presence in the forecast source</p>
+          <p>Month-on-month cost change</p>
+          <p>Rolling cost volatility</p>
+          <p>Service category and environment</p>
+          <p>New-line-item indicators</p>
+        </div>
+
+        <div class="card">
+          <h3>Why this mattered</h3>
+
+          <p>
+            Data-quality characteristics were treated as potential signals rather than
+            simply being removed during cleaning.
+          </p>
+
+          <p>
+            For example, a missing App ID could itself indicate an attribution or
+            governance problem and therefore contain useful information about the
+            likelihood of reconciliation effort.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <h2>Analytical Model</h2>
+
+      <p>
+        Logistic Regression was selected because the outcome was binary and because
+        an interpretable probability-based model was more suitable for a governance
+        context than an opaque prediction alone.
+      </p>
+
+      <div class="grid-3">
+
+        <div class="card metric">
+          <span class="metric-value">0.76</span>
+          <span class="metric-label">ROC-AUC</span>
+        </div>
+
+        <div class="card metric">
+          <span class="metric-value">83%</span>
+          <span class="metric-label">Discrepancy Recall</span>
+        </div>
+
+        <div class="card metric">
+          <span class="metric-value">0.35</span>
+          <span class="metric-label">Decision Threshold</span>
+        </div>
+
+      </div>
+
+      <div class="highlight">
+        <strong>Why recall was prioritised:</strong>
+        A false negative could allow a genuine discrepancy to remain unresolved until
+        forecast submission. A false positive mainly creates additional investigation
+        effort. The selected threshold therefore reflects the operational cost of the
+        two error types rather than headline accuracy alone.
+      </div>
+
+    </div>
+  </section>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>Key Findings</h2>
+
+      <p class="intro">
+        The analysis identified repeatable characteristics associated with higher
+        discrepancy risk.
+      </p>
+
+      <div class="grid-2">
+
+        <div class="card">
+          <h3>Identifier quality</h3>
+
+          <p>
+            Missing or incorrect App IDs were strongly associated with discrepancy
+            likelihood, reinforcing the importance of consistent attribution.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Cloudability visibility</h3>
+
+          <p>
+            Items expected within forecasts but not visible in the relevant
+            Cloudability reporting view represented an important reconciliation risk.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Cost volatility</h3>
+
+          <p>
+            Larger month-on-month changes provided an additional signal that an item
+            may require closer review.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Service patterns</h3>
+
+          <p>
+            Service category and environment provided further context for identifying
+            areas where targeted governance controls may be appropriate.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <h2>Decision-Support Dashboard</h2>
+
+      <p>
+        The analytical work was translated into a dashboard structured around the
+        questions different stakeholders needed to answer.
+      </p>
+
+      <div class="grid-3">
+
+        <div class="card">
+          <h3>Executive Summary</h3>
+
+          <p>
+            Provides rapid visibility of actual cost, forecast position and variance
+            for governance discussions.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Environment & Product Analysis</h3>
+
+          <p>
+            Helps Engineering and FinOps users locate where unexpected cost variance
+            is concentrated.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Forecast vs Actual Deep Dive</h3>
+
+          <p>
+            Provides additional context for investigation and supports movement from
+            high-level variance to likely underlying causes.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="highlight">
+        The intended analytical path was shortened from
+        <strong>“a variance exists”</strong> to
+        <strong>“where is the variance and what requires investigation?”</strong>.
+      </div>
+
+    </div>
+  </section>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>Business Impact</h2>
+
+      <p>
+        The most important evaluation principle was to distinguish evidence that had
+        already been observed from benefits that remained projected.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Impact area</th>
+            <th>Evidence</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr>
+            <td>Discrepancy detection</td>
+            <td>83% recall at the selected 0.35 threshold</td>
+            <td><strong>Measured</strong></td>
+          </tr>
+
+          <tr>
+            <td>Root-cause understanding</td>
+            <td>
+              Recurring identifier, visibility and volatility patterns were identified
+            </td>
+            <td><strong>Measured</strong></td>
+          </tr>
+
+          <tr>
+            <td>Stakeholder value</td>
+            <td>
+              Positive recognition was received from FinOps and Engineering leadership
+              for investigation, ownership, solution design and communication
+            </td>
+            <td><strong>Observed</strong></td>
+          </tr>
+
+          <tr>
+            <td>Reduced reconciliation effort</td>
+            <td>
+              Risk-based prioritisation is expected to reduce avoidable manual review
+            </td>
+            <td><strong>Projected</strong></td>
+          </tr>
+
+          <tr>
+            <td>Improved forecast confidence</td>
+            <td>
+              Earlier discrepancy identification is expected to reduce late corrections
+            </td>
+            <td><strong>Projected</strong></td>
+          </tr>
+
+        </tbody>
+      </table>
+
+      <div class="impact-note">
+        <strong>Important:</strong>
+        Financial and time savings have not been presented as realised benefits because
+        a sufficient post-implementation baseline has not yet been collected.
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <h2>Stakeholder Recognition</h2>
+
+      <p>
+        The work received positive recognition from both FinOps and Engineering
+        stakeholders.
+      </p>
+
+      <div class="grid-2">
+
+        <div class="card">
+          <h3>What was recognised</h3>
+
+          <p>Ownership of the Cloudability investigation</p>
+          <p>Root-cause analysis of missing cost visibility</p>
+          <p>Development of temporary and longer-term fixes</p>
+          <p>Clearer labelling and attribution guidance</p>
+          <p>Communication of learning across the wider team</p>
+        </div>
+
+        <div class="card">
+          <h3>Why this evidence matters</h3>
+
+          <p>
+            Technical model performance alone does not demonstrate organisational
+            impact. Stakeholder recognition provides additional evidence that the work
+            addressed a genuine business problem and improved the investigation and
+            reporting process.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>Measuring Future Value</h2>
+
+      <p>
+        A financial value should only be claimed once operational baseline data is
+        available.
+      </p>
+
+      <div class="highlight">
+        <strong>Proposed valuation:</strong><br><br>
+
+        Annual efficiency value =
+        reduction in reconciliation hours per forecast cycle
+        × annual forecast cycles
+        × blended staff cost per hour
+      </div>
+
+      <p>
+        Additional measures should include time-to-insight, forecast variance,
+        late-discrepancy counts, number of high-risk items requiring review,
+        dashboard adoption and stakeholder usefulness.
+      </p>
+
+      <p>
+        If review effort does not reduce, forecast quality does not improve, or the
+        false-positive workload becomes operationally unacceptable, the threshold and
+        the wider business case should be reconsidered.
+      </p>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <h2>Limitations & Responsible Use</h2>
+
+      <div class="grid-2">
+
+        <div class="card">
+          <h3>Changing process</h3>
+
+          <p>
+            The model depends on historical discrepancy patterns. Improved data-quality
+            controls may change the process that generated those patterns and therefore
+            cause model drift.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Human oversight</h3>
+
+          <p>
+            Risk scores should prioritise investigation rather than automatically
+            determine financial decisions.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Confidentiality</h3>
+
+          <p>
+            Confidential organisational cost figures, identifiers and commercially
+            sensitive information are not disclosed within this public portfolio.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Monitoring</h3>
+
+          <p>
+            Model performance, discrepancy prevalence, review workload and stakeholder
+            usefulness should be monitored as the process is operationalised.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>What I Learned</h2>
+
+      <p>
+        This project demonstrated how a recurring operational problem can be reframed
+        as a structured data-quality and analytical problem.
+      </p>
+
+      <p>
+        The strongest outcome was not the model alone. Value was created by combining
+        reconciliation knowledge, interpretable analytics, stakeholder engagement,
+        dashboard design and practical governance recommendations.
+      </p>
+
+      <p>
+        It also reinforced the importance of making bounded business-impact claims.
+        Measured outcomes and stakeholder evidence can be reported confidently, while
+        future financial and time-saving benefits require baseline measurement before
+        being presented as realised value.
+      </p>
+
+      <a class="button secondary" href="index.html">
+        ← Back to Portfolio
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>
+      <strong>Astha Chandra</strong> · Senior Software Engineer | Data Science Apprentice
+    </p>
+  </footer>
+
+</body>
+</html>
