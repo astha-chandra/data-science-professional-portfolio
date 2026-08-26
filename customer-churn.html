@@ -1,1 +1,729 @@
-Customer Churn Case Study
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Customer Churn Prediction | Astha Chandra</title>
+
+  <style>
+    :root {
+      --navy: #102a43;
+      --blue: #1f6feb;
+      --light-blue: #eaf3ff;
+      --text: #243b53;
+      --muted: #627d98;
+      --background: #f7f9fc;
+      --white: #ffffff;
+      --border: #d9e2ec;
+      --green: #2f855a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--background);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    nav {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 18px 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    nav a:hover {
+      color: var(--blue);
+    }
+
+    .hero {
+      max-width: 1100px;
+      margin: auto;
+      padding: 85px 25px 60px;
+    }
+
+    .eyebrow {
+      color: var(--blue);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+      font-size: 0.9rem;
+    }
+
+    h1 {
+      color: var(--navy);
+      font-size: 3rem;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      max-width: 850px;
+      font-size: 1.08rem;
+      color: var(--muted);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 25px;
+    }
+
+    .tag {
+      background: var(--light-blue);
+      color: var(--blue);
+      padding: 6px 11px;
+      border-radius: 20px;
+      font-size: 0.84rem;
+      font-weight: 600;
+    }
+
+    section {
+      padding: 65px 25px;
+    }
+
+    .white {
+      background: var(--white);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    h2 {
+      color: var(--navy);
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      color: var(--navy);
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 16px;
+    }
+
+    .intro {
+      color: var(--muted);
+      max-width: 850px;
+      margin-bottom: 30px;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 25px;
+      box-shadow: 0 6px 20px rgba(16,42,67,0.05);
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--blue);
+      display: block;
+    }
+
+    .metric-label {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .highlight {
+      background: var(--light-blue);
+      border-left: 4px solid var(--blue);
+      padding: 22px;
+      border-radius: 8px;
+      margin: 24px 0;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 16px;
+    }
+
+    .step {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .step strong {
+      color: var(--blue);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      background: var(--white);
+    }
+
+    th, td {
+      border-bottom: 1px solid var(--border);
+      padding: 12px;
+      text-align: left;
+    }
+
+    th {
+      background: var(--light-blue);
+      color: var(--navy);
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--blue);
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+
+    .button.secondary {
+      background: white;
+      color: var(--blue);
+      border: 1px solid var(--blue);
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      padding: 35px 25px;
+      text-align: center;
+    }
+
+    footer a {
+      color: white;
+    }
+
+    @media (max-width: 850px) {
+      .grid-2,
+      .grid-4 {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 2.3rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <div class="brand">Astha Chandra</div>
+      <a href="index.html">← Back to Portfolio</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">Project 01 · Data Science Project</div>
+
+    <h1>Customer Churn Prediction & Retention Intelligence</h1>
+
+    <p>
+      An end-to-end machine learning project developed to identify customers at elevated
+      risk of churn and translate model outputs into practical retention decision support.
+    </p>
+
+    <div class="tags">
+      <span class="tag">Python</span>
+      <span class="tag">pandas</span>
+      <span class="tag">scikit-learn</span>
+      <span class="tag">Logistic Regression</span>
+      <span class="tag">Random Forest</span>
+      <span class="tag">Power BI</span>
+    </div>
+  </header>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>Business Challenge</h2>
+
+      <p class="intro">
+        The project explored whether customer information could be used to identify
+        customers who were more likely to leave and whether those predictions could be
+        translated into useful retention priorities.
+      </p>
+
+      <div class="highlight">
+        <strong>Core question:</strong>
+        Can churn risk be predicted with sufficient reliability to support customer
+        retention decisions, while explicitly balancing the cost of missed churners
+        against unnecessary retention interventions?
+      </div>
+
+      <p>
+        The dataset contained 10,000 customer records, with an observed churn rate of
+        approximately 20.37%. Because the churn class was substantially smaller than the
+        non-churn class, model evaluation focused on more than overall accuracy.
+        Churn recall, F1 score and ROC-AUC were considered alongside accuracy.
+      </p>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <h2>Project Workflow</h2>
+
+      <div class="timeline">
+
+        <div class="step">
+          <strong>1. Data preparation</strong><br>
+          Customer data was reviewed, cleaned and transformed into model-ready features.
+          Interpretable fields such as AgeBand were also created to support analysis
+          and dashboard communication.
+        </div>
+
+        <div class="step">
+          <strong>2. Train-test design</strong><br>
+          A stratified 80:20 split was used, producing 8,000 training observations
+          and 2,000 test observations while preserving the churn distribution.
+        </div>
+
+        <div class="step">
+          <strong>3. Preprocessing</strong><br>
+          Numerical variables were standardised and categorical variables were one-hot
+          encoded inside scikit-learn pipelines to support consistent training and scoring.
+        </div>
+
+        <div class="step">
+          <strong>4. Model comparison</strong><br>
+          Logistic Regression, Random Forest and a reduced-feature Random Forest were
+          evaluated using out-of-sample performance metrics.
+        </div>
+
+        <div class="step">
+          <strong>5. Threshold optimisation</strong><br>
+          Alternative probability thresholds were assessed to improve churn recall and
+          identify a more useful operational balance between precision and recall.
+        </div>
+
+        <div class="step">
+          <strong>6. Business intelligence</strong><br>
+          Predictions and risk information were integrated into Power BI to provide
+          operational monitoring, model-performance reporting and model interpretation.
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>Model Comparison</h2>
+
+      <p class="intro">
+        Multiple approaches were compared so that the final model choice was based on
+        evidence rather than on a single algorithm.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Accuracy</th>
+            <th>ROC-AUC</th>
+            <th>Interpretation</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Logistic Regression</td>
+            <td>82.65%</td>
+            <td>79.95%</td>
+            <td>Useful baseline, but lower discrimination and churn recall.</td>
+          </tr>
+
+          <tr>
+            <td>Random Forest</td>
+            <td>85.80%</td>
+            <td>85.28%</td>
+            <td>Stronger overall predictive performance.</td>
+          </tr>
+
+          <tr>
+            <td>Reduced Random Forest</td>
+            <td>86.00%</td>
+            <td>85.03%</td>
+            <td>Similar performance with a more focused feature set.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        Random Forest was retained as the basis for the operational solution because it
+        provided stronger predictive discrimination than Logistic Regression while still
+        supporting post-model interpretation through permutation importance.
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <h2>Threshold Optimisation</h2>
+
+      <p>
+        The default 0.50 classification threshold was not accepted automatically. At that
+        threshold the model produced relatively high churn precision but identified fewer
+        genuine churners. Lower thresholds were therefore tested to investigate the
+        operational trade-off.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Threshold</th>
+            <th>Precision</th>
+            <th>Recall</th>
+            <th>F1</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>0.50</td>
+            <td>76.57%</td>
+            <td>44.96%</td>
+            <td>56.66%</td>
+          </tr>
+
+          <tr>
+            <td>0.40</td>
+            <td>66.97%</td>
+            <td>54.30%</td>
+            <td>59.97%</td>
+          </tr>
+
+          <tr>
+            <td><strong>0.35</strong></td>
+            <td><strong>62.12%</strong></td>
+            <td><strong>60.44%</strong></td>
+            <td><strong>61.27%</strong></td>
+          </tr>
+
+          <tr>
+            <td>0.30</td>
+            <td>55.88%</td>
+            <td>66.58%</td>
+            <td>60.76%</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="highlight">
+        <strong>Decision:</strong> A threshold of <strong>0.35</strong> was selected because
+        it produced the highest F1 score among the thresholds tested while substantially
+        improving recall compared with the default 0.50 threshold.
+      </div>
+
+    </div>
+  </section>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>Final Operational Model</h2>
+
+      <div class="grid-4">
+
+        <div class="card metric">
+          <span class="metric-value">84.45%</span>
+          <span class="metric-label">Accuracy</span>
+        </div>
+
+        <div class="card metric">
+          <span class="metric-value">85.03%</span>
+          <span class="metric-label">ROC-AUC</span>
+        </div>
+
+        <div class="card metric">
+          <span class="metric-value">60.44%</span>
+          <span class="metric-label">Churn Recall</span>
+        </div>
+
+        <div class="card metric">
+          <span class="metric-value">61.27%</span>
+          <span class="metric-label">Churn F1</span>
+        </div>
+
+      </div>
+
+      <div class="highlight">
+        <strong>Final model:</strong> Random Forest with a decision threshold of 0.35.
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <h2>Confusion Matrix & Operational Trade-off</h2>
+
+      <div class="grid-2">
+
+        <div class="card">
+          <h3>Test-set outcomes</h3>
+
+          <p><strong>True positives:</strong> 246</p>
+          <p><strong>False negatives:</strong> 161</p>
+          <p><strong>False positives:</strong> 150</p>
+          <p><strong>True negatives:</strong> 1,443</p>
+        </div>
+
+        <div class="card">
+          <h3>Business interpretation</h3>
+
+          <p>
+            The model identified 246 of 407 actual churners, corresponding to 60.44%
+            recall.
+          </p>
+
+          <p>
+            The lower threshold also resulted in 150 customers who ultimately stayed
+            being flagged for retention activity.
+          </p>
+
+          <p>
+            This represents a deliberate trade-off: more genuine churners are surfaced
+            for intervention, but additional retention capacity may be required.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>Key Prediction Drivers</h2>
+
+      <p class="intro">
+        Permutation feature importance was used to investigate which variables contributed
+        most strongly to the model's predictions.
+      </p>
+
+      <div class="grid-2">
+
+        <div class="card">
+          <h3>Most influential features</h3>
+          <p>1. Number of Products</p>
+          <p>2. Age</p>
+          <p>3. Active Member Status</p>
+          <p>4. Geography</p>
+          <p>5. Age Band</p>
+          <p>6. Balance</p>
+        </div>
+
+        <div class="card">
+          <h3>Interpretation caution</h3>
+
+          <p>
+            Feature importance indicates predictive contribution, not causation.
+            A feature associated with churn should therefore be treated as a signal for
+            investigation or segmentation rather than evidence that it causes a customer
+            to leave.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <h2>Power BI Decision-Support Solution</h2>
+
+      <p>
+        Model outputs were translated into a three-page Power BI solution so that
+        prediction results could be explored by both operational and analytical users.
+      </p>
+
+      <div class="grid-2">
+
+        <div class="card">
+          <h3>1. Operational Churn Dashboard</h3>
+          <p>
+            Provides total-customer, churn-risk, actual-churn and high-risk KPIs,
+            interactive slicers, churn analysis by geography, age and gender, and a
+            customer-level retention action table.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>2. Model Performance</h3>
+          <p>
+            Compares model performance and communicates accuracy, ROC-AUC, churn recall,
+            F1 and the threshold precision-recall trade-off.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>3. Model Insights</h3>
+          <p>
+            Explains the final confusion matrix, important model drivers and business
+            implications of the selected churn strategy.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Decision-support objective</h3>
+          <p>
+            The dashboard provides a route from prediction to risk identification,
+            interpretation and retention action rather than leaving the output solely
+            within a technical notebook.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="white">
+    <div class="container">
+
+      <h2>Limitations & Responsible Use</h2>
+
+      <div class="grid-2">
+
+        <div class="card">
+          <h3>Model limitations</h3>
+          <p>
+            Results are based on one historical public dataset and should not be treated
+            as guaranteed production performance. Churn behaviour, customer mix and data
+            quality may change over time.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Responsible use</h3>
+          <p>
+            Age, gender and geography may create fairness concerns in a real banking
+            environment. Predictions should support proportionate human-reviewed retention
+            decisions rather than automated adverse treatment of customers.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Monitoring</h3>
+          <p>
+            A deployed model would require monitoring of churn prevalence, score
+            distributions, recall, ROC-AUC, calibration and segment-level performance.
+          </p>
+        </div>
+
+        <div class="card">
+          <h3>Business validation</h3>
+          <p>
+            Predictive performance does not prove that a retention intervention prevents
+            churn. Controlled testing would be required to measure incremental business
+            impact.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+
+      <h2>What I Learned</h2>
+
+      <p>
+        This project reinforced that model selection cannot be based on accuracy alone.
+        The most useful operating point depends on the business consequences of different
+        error types.
+      </p>
+
+      <p>
+        It also demonstrated the importance of connecting technical model outputs to
+        accessible decision-support tools. The strongest solution was not simply the model
+        with the best score, but the combination of predictive modelling, threshold
+        evaluation, interpretation and operational visualisation.
+      </p>
+
+      <a class="button secondary" href="index.html">
+        ← Back to Portfolio
+      </a>
+
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Astha Chandra</strong> · Senior Software Engineer | Data Science Apprentice</p>
+  </footer>
+
+</body>
+</html>
