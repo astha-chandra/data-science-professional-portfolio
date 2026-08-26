@@ -320,6 +320,52 @@
 
     </div>
   </section>
+  <section>
+  <div class="container">
+
+    <h2>Analytical Hypothesis & Evaluation Strategy</h2>
+
+    <p class="intro">
+      The modelling task was framed as a testable classification problem rather
+      than simply an exercise in maximising predictive accuracy.
+    </p>
+
+    <div class="grid-2">
+
+      <div class="card">
+        <h3>Working hypothesis</h3>
+        <p>
+          Customer characteristics and account behaviour contain sufficient
+          predictive information to distinguish customers at elevated risk of
+          churn from those likely to remain, with performance above a simple
+          non-informative classifier.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>What would challenge the hypothesis?</h3>
+        <p>
+          The hypothesis would not be supported if out-of-sample discrimination
+          remained close to random performance, if churn recall could only be
+          increased through an operationally unacceptable number of false
+          positives, or if performance failed to remain meaningful on unseen
+          customer data.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="highlight">
+      <strong>Evaluation strategy:</strong>
+      Performance was assessed on a held-out test sample using ROC-AUC, accuracy,
+      churn recall, precision and F1 rather than relying on a single metric.
+      This was important because approximately 20% of customers in the dataset
+      churned, meaning that high overall accuracy could coexist with poor
+      identification of the minority churn class.
+    </div>
+
+  </div>
+</section>
 <section>
   <div class="container">
 
@@ -648,6 +694,35 @@
       </div>
 
     </div>
+    <div class="highlight">
+  <strong>Decision:</strong> A threshold of <strong>0.35</strong> was selected because
+  it produced the highest F1 score among the thresholds tested while substantially
+  improving recall compared with the default 0.50 threshold.
+</div>
+
+<div class="highlight">
+  <strong>Sensitivity analysis:</strong>
+  Threshold testing was treated as a sensitivity analysis of the operational
+  decision rule. Reducing the threshold from 0.50 to 0.35 increased churn recall
+  from 44.96% to 60.44%, while precision decreased from 76.57% to 62.12%.
+  Reducing it further to 0.30 increased recall to 66.58%, but precision fell to
+  55.88% and F1 decreased slightly to 60.76%. The recommendation was therefore
+  sensitive to the relative business cost of missed churners and unnecessary
+  retention interventions rather than being universally optimal.
+</div>
+
+<div class="highlight">
+  <strong>Robustness limitation:</strong>
+  The threshold comparison demonstrates sensitivity to the classification rule,
+  but it does not establish that 0.35 will remain optimal for another customer
+  population or a different retention budget. A production decision should
+  therefore re-estimate the operating threshold using current churn prevalence,
+  intervention capacity and the financial consequences of false-positive and
+  false-negative decisions.
+</div>
+
+</div>
+</section>
   </section>
 
   <section class="white">
